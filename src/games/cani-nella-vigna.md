@@ -4,7 +4,7 @@ tags:
   - 3 giocatori
   - 4 giocatori
   - 5 giocatori
-  - campagna
+  - "durata: campagna"
 ---
 
 “Voi vi ergete fra la Legge di Dio e le debolezze degli uomini.

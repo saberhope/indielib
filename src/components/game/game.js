@@ -4,7 +4,7 @@ import hastToHyperscript from "hast-to-hyperscript";
 
 const Game = ({ title, description }) => (
   <div className="game">
-    <h1>{title}</h1>
+    <h2>{title}</h2>
     {hastToHyperscript(React.createElement, description)}
   </div>
 )

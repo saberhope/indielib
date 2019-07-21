@@ -52,15 +52,15 @@ class IndexPage extends React.Component {
     return (
     <Layout>
       <SEO title="Home" />
-      <h1>Hi people</h1>
+      <h1>Lista dei giochi</h1>
 
       {Object.keys(this.state.tags).map(key => (
         <div key={key}>
-          <label>{key}</label>
           <input type="checkbox" 
                  value={key} 
                  checked={this.state.tags[key]} 
                  onChange={ this.change }/>
+          &nbsp;<label>{key}</label>
         </div>
       ))}
 
