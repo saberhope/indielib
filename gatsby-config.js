@@ -12,8 +12,16 @@ module.exports = {
         name: `images`,
         path: `${__dirname}/src/images`,
       },
+    },    
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `games`,
+        path: `${__dirname}/src/games`,
+      },
     },
     `gatsby-transformer-sharp`,
+    'gatsby-transformer-remark',
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
