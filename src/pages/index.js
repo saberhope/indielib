@@ -1,5 +1,6 @@
 import React from "react"
 import Layout from "../components/layout"
+import Game from "../components/game/game"
 import SEO from "../components/seo"
 import { graphql } from 'gatsby'
 
@@ -9,7 +10,6 @@ class IndexPage extends React.Component {
 
     // Populate filters state
     const tags = {};
-    console.debug(props.data.tags)
     props.data.tags.group.forEach(tag => {
       tags[tag.fieldValue] = false; // checked attribute of checkbox
     });
@@ -19,7 +19,7 @@ class IndexPage extends React.Component {
     }
     
     this.change = this.change.bind(this);
-    this.getClass = this.getClass.bind(this);
+    this.isVisible = this.isVisible.bind(this);
   }
 
   change(event) {
@@ -28,15 +28,14 @@ class IndexPage extends React.Component {
     this.setState({tags: tags});
   }
 
-  getClass(tags) {
+  isVisible(tags) {
     const selected = Object.keys(this.state.tags).filter(key => {
       return this.state.tags[key];
     })
-    console.debug(selected);
 
     // If no filters are selected, game is visible
     if (selected.length === 0){
-      return '';
+      return true;
     }
 
     let visible = true;
@@ -46,11 +45,7 @@ class IndexPage extends React.Component {
       }
     }
 
-    if (visible) {
-      return '';
-    }
-
-    return 'hidden';
+    return visible;
   }
 
   render() {
@@ -62,17 +57,20 @@ class IndexPage extends React.Component {
       {Object.keys(this.state.tags).map(key => (
         <div key={key}>
           <label>{key}</label>
-          <input type="checkbox" value={key} checked={this.state.tags[key]} onChange={ this.change }/>
+          <input type="checkbox" 
+                 value={key} 
+                 checked={this.state.tags[key]} 
+                 onChange={ this.change }/>
         </div>
       ))}
 
-      {this.props.data.games.edges.map(({ node }) => (
-        <div key={node.id} className={this.getClass(node.frontmatter.tags)}>
-          <h3>
-            {node.frontmatter.title}{" "}
-          </h3>
-          {node.html}
-        </div>
+      {this.props.data.games.edges.filter(({ node }) => {
+        return this.isVisible(node.frontmatter.tags);
+      }).map(({ node }) => (
+        <Game title={node.frontmatter.title}
+              description={node.htmlAst}
+              key={node.id}>
+        </Game>
       ))}
     </Layout>
   )}
@@ -91,7 +89,7 @@ export const query = graphql`
       edges {
         node {
           id
-          html
+          htmlAst
           frontmatter {
             title
             tags
