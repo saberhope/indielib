@@ -52,6 +52,11 @@ class IndexPage extends React.Component {
     return (
     <Layout>
       <SEO title="Home" />
+
+      <p>Indielib e' una lista di giochi di ruolo indie filtrabile tramite le "pratiche" checkbox qua sotto. E' stata creata per avere una specie di repository centralizzato di quali giochi ci sono in giro, e che caratteristiche hanno.</p>
+
+      <p>Non e' minimamente completo!! Mi son sdata dopo 20 minuti a scrivere i giochi, e ho tipo solo copiato meta' del catalogo narrattiva. Pero' potete facilmente contribuire da qua: <a href="https://github.com/saberhope/indielib/tree/master/src/games">https://github.com/saberhope/indielib/tree/master/src/games</a>.</p>
+
       <h1>Lista dei giochi</h1>
 
       {Object.keys(this.state.tags).map(key => (

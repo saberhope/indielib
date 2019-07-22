@@ -35,6 +35,36 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-json-output`,
+      options: {
+        siteUrl: `https://indielib.surge.sh`,
+        graphQLQuery: `
+          {
+            allMarkdownRemark {
+              edges {
+                node {
+                  id
+                  html
+                  htmlAst
+                  frontmatter {
+                    title
+                    tags
+                  }
+                }
+              }
+            }
+          }
+        `,
+        serializeFeed: results => results.data.allMarkdownRemark.edges.map(({ node }) => ({
+          id: node.id,
+          title: node.frontmatter.title,
+          tags: node.frontmatter.tags,
+          html: node.html
+        })),
+        nodesPerFeedFile: 10000,
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
